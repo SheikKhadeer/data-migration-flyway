@@ -1,0 +1,21 @@
+server:
+  port: 8093
+
+spring:
+  application:
+    name: data-migration-flyway
+  datasource:
+    url: jdbc:postgresql://localhost:5432/migrationdb
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      # IMPORTANT: never "update" or "create" alongside Flyway — Flyway owns the
+      # schema. "validate" just confirms your entities match what migrations
+      # produced, and fails fast at startup if they've drifted apart.
+      ddl-auto: validate
+    show-sql: true
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: false
